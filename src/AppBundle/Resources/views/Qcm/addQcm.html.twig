@@ -1,0 +1,79 @@
+
+{% extends 'base.html.twig' %}
+
+
+{% block javascripts %}
+{% verbatim %}
+<script type="text/javascript">
+    var app = angular.module('demo',['ngMaterial', 'ngMessages'/*, 'ngRessource'*/]);
+
+    app.controller('QueryController', function($scope, $http, $mdToast, $log) {
+        $scope.queries = [];
+        $scope.difficulties = [
+            {id:0, text: 'Facile'},
+            {id:1, text: 'Moyen'}
+        ];
+
+        $scope.addQuery = function () {
+            $scope.queries.push({
+                responses: [],
+                difficulty: 0
+            });
+        }
+
+        $scope.addResponse = function (query) {
+            query.responses.push({
+                text: ''
+            });
+        }
+
+        $scope.debug = function () {
+            console.log($scope.queries);
+        }
+
+        $scope.save = function () {
+            $log.debug('Saving...');
+            $http.post('/queries/updates', $scope.queries).then (function () {
+                var toast = $mdToast.simple().textContent('Sauvegarde effectuée');
+                $mdToast.show(toast);
+            });
+        }
+    });
+
+</script>
+{% endverbatim %}
+{% endblock %}
+{% block body %}
+{% verbatim %}
+<div ng-app="demo">
+    <div ng-controller="QueryController">
+        <md-content layout-padding>
+            <button ng-click="debug()">Debug</button>
+            <button ng-click="addQuery()">Ajouter</button>
+
+            <div ng-repeat="item in queries">
+                <h1>Question {{ $index + 1 }}</h1>
+                <md-input-container>
+                    <md-select ng-model="item.difficulty">
+                        <md-option ng-value="difficulty" ng-repeat="difficulty in difficulties">{{ difficulty.text }}</md-option>
+                    </md-select>
+                </md-input-container>
+                <br />
+
+                <md-input-container ng-repeat="response in item.responses">
+                    <input type="text" ng-model="response.text" /><br />
+                </md-input-container>
+
+                <button ng-click="addResponse(item)">Ajouter une réponse</button>
+            </div>
+        </md-content>
+
+        <button ng-click="save()">Sauvegarder</button>
+    </div>
+</div>
+
+
+{% endverbatim %}
+{% endblock %}
+
+

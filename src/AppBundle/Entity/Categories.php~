@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation\Groups;
 
 /**
  * Categories
@@ -28,11 +27,11 @@ class Categories
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="IdCat", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $idCat;
 
     /**
      * @var string
@@ -44,7 +43,6 @@ class Categories
      *      minMessage = "Votre username doit faire au moins {{ limit }} characteres",
      *      maxMessage = "Votre username ne peut pas dépasser {{ limit }} characteres"
      * )
-     * @Groups({"list", "details"})
      */
     private $name;
 
@@ -147,35 +145,5 @@ class Categories
         $this->qcm = $qcm;
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->qcm = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add qcm
-     *
-     * @param \AppBundle\Entity\Qcm $qcm
-     *
-     * @return Categories
-     */
-    public function addQcm(\AppBundle\Entity\Qcm $qcm)
-    {
-        $this->qcm[] = $qcm;
-
-        return $this;
-    }
-
-    /**
-     * Remove qcm
-     *
-     * @param \AppBundle\Entity\Qcm $qcm
-     */
-    public function removeQcm(\AppBundle\Entity\Qcm $qcm)
-    {
-        $this->qcm->removeElement($qcm);
-    }
 }
+

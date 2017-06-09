@@ -5,39 +5,89 @@
 {% block javascripts %}
 {% verbatim %}
 <script type="text/javascript">
-    var app = angular.module('demo',['ngMaterial', 'ngMessages'/*, 'ngRessource'*/]);
+    var app = angular.module('demo',['ngMaterial', 'ngMessages', 'ngResource']);
 
-    app.controller('QueryController', function($scope, $http, $mdToast, $log) {
-        $scope.queries = [];
+	   app.factory('Cat', function($resource) {
+	return $resource('/api/qcm/:id', {id: '@id'});
+});
+
+    app.controller('QueryController', function($scope, $http, $mdToast, $log,Cat) {
+
+        $scope.qcm = [];
         $scope.difficulties = [
-            {id:0, text: 'Facile'},
-            {id:1, text: 'Moyen'}
+            0,1,2,3,4,5,6,7,8,9,10
         ];
+        $scope.categories = [];
 
-        $scope.addQuery = function () {
-            $scope.queries.push({
+
+
+
+        $scope.addQuery = function (qcm) {
+            qcm.question.push({
+                text: 'vide',
                 responses: [],
-                difficulty: 0
+                difficulty: 0,
+                 rjuste: 0
+
+
             });
+
+
         }
+
+
+
+
+        $scope.startQcm = function () {
+             $scope.qcm.push({
+                text: 'title',
+                question: [],
+
+
+
+
+            });
+
+        }
+
+
+        		   $scope.update = function () {
+		$scope.loading = true;
+		$scope.cat = [];
+		$scope.details = null;
+
+		Cat.query().$promise
+		.then( function (data) {
+			$scope.cat = data;
+		})
+		.finally( function () {
+			$scope.loading = false;
+		});
+	}
+
+
+
 
         $scope.addResponse = function (query) {
             query.responses.push({
-                text: ''
+                text: '',
+
             });
         }
 
-        $scope.debug = function () {
-            console.log($scope.queries);
-        }
 
-        $scope.save = function () {
+
+        $scope.save = function (qcm) {
+
             $log.debug('Saving...');
-            $http.post('/queries/updates', $scope.queries).then (function () {
+            $http.post('/api/qcm', qcm).then (function () {
                 var toast = $mdToast.simple().textContent('Sauvegarde effectuée');
                 $mdToast.show(toast);
             });
         }
+        $scope.update();
+
+
     });
 
 </script>
@@ -48,27 +98,43 @@
 <div ng-app="demo">
     <div ng-controller="QueryController">
         <md-content layout-padding>
-            <button ng-click="debug()">Debug</button>
-            <button ng-click="addQuery()">Ajouter</button>
+        <button ng-click="startQcm()">Commencer</button>
+            <div ng-repeat="item2 in qcm">
+            <input type="text" ng-model="item2.text" /><br />
+            <button ng-click="addQuery(item2)">Ajouter une question</button>
 
-            <div ng-repeat="item in queries">
+            <div ng-repeat="item in item2.question">
                 <h1>Question {{ $index + 1 }}</h1>
+                 <input type="text" ng-model="item.text" /><br />
                 <md-input-container>
                     <md-select ng-model="item.difficulty">
-                        <md-option ng-value="difficulty" ng-repeat="difficulty in difficulties">{{ difficulty.text }}</md-option>
+                        <md-option ng-value="difficulty" ng-repeat="difficulty in difficulties">{{ difficulty }}</md-option>
                     </md-select>
+
                 </md-input-container>
+
                 <br />
 
                 <md-input-container ng-repeat="response in item.responses">
                     <input type="text" ng-model="response.text" /><br />
+
                 </md-input-container>
 
                 <button ng-click="addResponse(item)">Ajouter une réponse</button>
+
+                  <md-input-container>
+                    <md-select ng-model="categories">
+                        <md-option ng-value="categorie" ng-repeat="categorie in cat">{{ categorie.name }}</md-option>
+                    </md-select>
+
+                </md-input-container>
+
+            </div>
+            <button ng-click="save(item2)">Sauvegarder le qcm</button>
             </div>
         </md-content>
 
-        <button ng-click="save()">Sauvegarder</button>
+
     </div>
 </div>
 

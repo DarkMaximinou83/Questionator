@@ -125,4 +125,3 @@ class Candidat
         return $this->nbRjuste;
     }
 }
-

@@ -37,52 +37,35 @@ class AngularControllerController extends  FOSRestController
      *     output={"class" = "AppBundle\Entity\Qcm", "groups"={"list"}}
      * )
      * @ParamConverter("qcm", converter="fos_rest.request_body")
-
-
      */
     public function createActionQcm(Qcm $qcm)
     {
-
-        //$qcm->setCat($cat);
-        // echo($qcm->getCat()->getId());
-
-        //var_dump($qcm->getCat()->getId());
-
-
         $em = $this->getDoctrine()->getManager();
 
+        // récupère la catégorie en base
+        $cat = null;
+        if ($qcm->getCat() !== null && $qcm->getCat()->getId() !== null) {
+            $cat = $em->getRepository(Categories::class)->find($qcm->getCat()->getId());
+        }
 
-        // $em->remove($qcm->getCat());
-        //$em->clear(Qcm::class);
-        $em->persist($qcm);
-        //$em->flush();
-        //$em->detach(Categories::class);
-        // $em->clear($qcm->getCat());
-         $em->clear(Categories::class);
-
-        $em->flush();
-
-
-
-/*
+        if ($cat === null) {
+            throw new \Exception('Category is required');
+        }
         foreach ($qcm->getQuestion() as $value) {
 
             $value->setQcm($qcm);
-            $em->persist($value);
-            $em->detach($qcm->getCat());
-            $em->flush();
+
+
+
             foreach ($value->getResponses() as $value2) {
                 $value2->setQuestions($value);
-                $em->persist($value2);
-                $em->detach($qcm->getCat());
-                $em->flush();
+
             }
-        }*/
+        }
 
-
-
-
-
+        $qcm->setCat($cat); // associe une catégorie existante
+        $em->persist($qcm);
+        $em->flush();
 
 
 

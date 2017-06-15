@@ -63,7 +63,7 @@ class Question
     /**
      * @var Qcm
      *
-     * @ORM\ManyToOne(targetEntity="Qcm", inversedBy="questionQcm", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Qcm", inversedBy="question", cascade={"persist"})
      * @ORM\JoinColumn(name="qcm_id", referencedColumnName="id")
      */
     private $qcm;
@@ -182,5 +182,22 @@ class Question
         $this->responses[] = $response;
 
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->responses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Remove response
+     *
+     * @param \AppBundle\Entity\Responses $response
+     */
+    public function removeResponse(\AppBundle\Entity\Responses $response)
+    {
+        $this->responses->removeElement($response);
     }
 }

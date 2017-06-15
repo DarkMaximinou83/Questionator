@@ -11,22 +11,38 @@
 
 
     <div class="container">
-    <h3>Tabs Demo</h3>
-    <div class="row">
-        <div class="col s12">
-            <ul class="tabs">
-                <li class="tab col s3"><a href="#php">php</a></li>
-                <li class="tab col s3"><a href="#java">java</a></li>
-                <li class="tab col s3 "><a href="#c">c++ </a></li>
-                <li class="tab col s3"><a href="#symfony">Symfony</a></li>
-            </ul>
+
+
+
+    <table>
+        <tr>
+            <div class="col s12">
+                <ul class="tabs">
+                    {% for item in cat %}
+
+                        <li class="tab col s3"><a href="#{{ item.id }}">{{ item.name }}</a></li>
+
+
+
+
+
+
+        {% endfor %}
+
+                </ul>
+            </div>
+        </tr>
+        <tr>
+            {% for item in qcm %}
+
+            {% endfor %}
+
+
+
+        </tr>
+
+    </table>
         </div>
-        <div id="php" class="col s12">Qcm1</div>
-        <div id="java" class="col s12">Qcm2</div>
-        <div id="c" class="col s12">Qcm3 </div>
-        <div id="symfony" class="col s12">Qcm4</div>
-    </div>
-    </div>
 
 
 {% endblock %}

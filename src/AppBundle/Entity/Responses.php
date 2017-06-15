@@ -48,7 +48,7 @@ class Responses
     /**
      * @var Question
      *
-     * @ORM\ManyToOne(targetEntity="Question", inversedBy="responses")
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="responses",cascade={"persist"})
      * @ORM\JoinColumn(name="queries_id", referencedColumnName="id")
      */
     private $questions;

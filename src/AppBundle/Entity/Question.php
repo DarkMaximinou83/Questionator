@@ -51,7 +51,7 @@ class Question
     /**
      * @var Responses
      *
-     * @ORM\OneToMany(targetEntity="Responses", mappedBy="questions", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Responses", mappedBy="questions", cascade={"persist"})
      *
      * @Groups({"details"})
      */

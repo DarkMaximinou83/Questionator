@@ -17,7 +17,7 @@
         $scope.difficulties = [
             0,1,2,3,4,5,6,7,8,9,10
         ];
-        $scope.categories = [];
+        //$scope.categories ;
 
 
 
@@ -42,6 +42,9 @@
              $scope.qcm.push({
                 text: 'title',
                 question: [],
+                cat:{}
+
+
 
 
 
@@ -53,12 +56,12 @@
 
         		   $scope.update = function () {
 		$scope.loading = true;
-		$scope.cat = [];
+		$scope.categories = [];
 		$scope.details = null;
 
 		Cat.query().$promise
 		.then( function (data) {
-			$scope.cat = data;
+			$scope.categories = data;
 		})
 		.finally( function () {
 			$scope.loading = false;
@@ -86,6 +89,7 @@
             });
         }
         $scope.update();
+        $scope.startQcm ();
 
 
     });
@@ -98,9 +102,16 @@
 <div ng-app="demo">
     <div ng-controller="QueryController">
         <md-content layout-padding>
-        <button ng-click="startQcm()">Commencer</button>
+
             <div ng-repeat="item2 in qcm">
             <input type="text" ng-model="item2.text" /><br />
+
+             <md-input-container>
+                    <md-select ng-model="item2.cat">
+                        <md-option ng-value="categorie" ng-repeat="categorie in categories">{{ categorie.name }}</md-option>
+                    </md-select>
+
+                </md-input-container>
             <button ng-click="addQuery(item2)">Ajouter une question</button>
 
             <div ng-repeat="item in item2.question">
@@ -122,12 +133,7 @@
 
                 <button ng-click="addResponse(item)">Ajouter une réponse</button>
 
-                  <md-input-container>
-                    <md-select ng-model="categories">
-                        <md-option ng-value="categorie" ng-repeat="categorie in cat">{{ categorie.name }}</md-option>
-                    </md-select>
 
-                </md-input-container>
 
             </div>
             <button ng-click="save(item2)">Sauvegarder le qcm</button>

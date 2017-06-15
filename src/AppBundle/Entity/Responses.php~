@@ -88,4 +88,3 @@ class Responses
         return $this->text;
     }
 }
-

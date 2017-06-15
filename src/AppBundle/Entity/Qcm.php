@@ -24,8 +24,9 @@ class Qcm
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToMany(targetEntity="Categories", inversedBy="qcm")
-     * @ORM\JoinColumn(name="idCat", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Categories", inversedBy="qcm" ,cascade={"persist"})
+     * @ORM\JoinColumn(name="cat_id", referencedColumnName="id")
+     * @Groups({"details"})
      */
     private $cat;
 
@@ -45,12 +46,12 @@ class Qcm
      */
     private $question;
 
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->cat = new \Doctrine\Common\Collections\ArrayCollection();
         $this->question = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -89,33 +90,23 @@ class Qcm
     }
 
     /**
-     * Add cat
+     * Set cat
      *
      * @param \AppBundle\Entity\Categories $cat
      *
      * @return Qcm
      */
-    public function addCat(\AppBundle\Entity\Categories $cat)
+    public function setCat(\AppBundle\Entity\Categories $cat = null)
     {
-        $this->cat[] = $cat;
+        $this->cat = $cat;
 
         return $this;
     }
 
     /**
-     * Remove cat
-     *
-     * @param \AppBundle\Entity\Categories $cat
-     */
-    public function removeCat(\AppBundle\Entity\Categories $cat)
-    {
-        $this->cat->removeElement($cat);
-    }
-
-    /**
      * Get cat
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Categories
      */
     public function getCat()
     {

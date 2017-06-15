@@ -24,8 +24,9 @@ class Qcm
 
     /**
      * Many Features have One Product.
-     * @ORM\ManyToMany(targetEntity="Categories", inversedBy="qcm")
-     * @ORM\JoinColumn(name="idCat", referencedColumnName="IdCat")
+     * @ORM\ManyToOne(targetEntity="Categories", inversedBy="qcm" ,cascade={"persist"})
+     * @ORM\JoinColumn(name="cat_id", referencedColumnName="id")
+     * @Groups({"details"})
      */
     private $cat;
 
@@ -43,6 +44,106 @@ class Qcm
      *
      * @Groups({"details"})
      */
-    private $questionQcm;
+    private $question;
 
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->question = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return Qcm
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set cat
+     *
+     * @param \AppBundle\Entity\Categories $cat
+     *
+     * @return Qcm
+     */
+    public function setCat(\AppBundle\Entity\Categories $cat = null)
+    {
+        $this->cat = $cat;
+
+        return $this;
+    }
+
+    /**
+     * Get cat
+     *
+     * @return \AppBundle\Entity\Categories
+     */
+    public function getCat()
+    {
+        return $this->cat;
+    }
+
+    /**
+     * Add question
+     *
+     * @param \AppBundle\Entity\Question $question
+     *
+     * @return Qcm
+     */
+    public function addQuestion(\AppBundle\Entity\Question $question)
+    {
+        $this->question[] = $question;
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \AppBundle\Entity\Question $question
+     */
+    public function removeQuestion(\AppBundle\Entity\Question $question)
+    {
+        $this->question->removeElement($question);
+    }
+
+    /**
+     * Get question
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
 }

@@ -1,48 +1,37 @@
 {% extends 'base.html.twig' %}
 
-
-
-
-
-
 {% block body %}
-
-
-
-
     <div class="container">
 
 
-
-    <table>
-        <tr>
-            <div class="col s12">
-                <ul class="tabs">
-                    {% for item in cat %}
-
-                        <li class="tab col s3"><a href="#{{ item.id }}">{{ item.name }}</a></li>
-
+        <div class="row center-block">
+            {% block stylesheets %}
+            <style>
+                .center-block{
+                    text-align: center
+                }
+            </style>
 
 
 
-
-
-        {% endfor %}
-
-                </ul>
+            {% endblock %}
+            <div>
+                <a href="{{ path('choixQcm') }}" class="waves-effect waves-light btn-large" style="margin-top: 20%" >Voir liste QCM</a>
             </div>
-        </tr>
-        <tr>
-            {% for item in qcm %}
 
-            {% endfor %}
+            <div style="margin-top: 3%">
+                <a href="{{ path('Add') }}" class="waves-effect waves-light btn-large">Nouvelle catégorie</a>
+            </div>
 
+            <div style="margin-top: 3%">
+                <a href="{{ path('Add') }}" class="waves-effect waves-light btn-large">Nouvelle catégorie</a>
+            </div>
 
-
-        </tr>
-
-    </table>
+            <div style="margin-top: 3%">
+                <a href="{{ path('addQCM') }}"class="btn-floating btn-large waves-effect waves-light "><i class="material-icons">add</i></a>
+            </div>
         </div>
+    </div>
 
 
 {% endblock %}

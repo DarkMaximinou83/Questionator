@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Modifier QCM
+{% endblock %}
+
+{% block javascripts %}
+    {% verbatim %}
+<script type="text/javascript">
+    var app = angular.module('demo',['ngMaterial', 'ngMessages', 'ngResource']);
+
+	   app.factory('Qcm', function($resource) {
+	return $resource('/api/play/:id', {id: '@id'});
+});
+
+    app.controller('QueryController', function($scope, $http, $mdToast, $log,Qcm) {
+        $scope.qcm = [];
+
+    $scope.select = function (id2) {
+		$scope.details = null;
+
+
+
+
+		Qcm.get({id: id2}).$promise.then( function (data) {
+			$scope.qcm = data;
+		});
+	}
+	$scope.update = function () {
+		$scope.loading = true;
+		$scope.qcm = [];
+		$scope.details = null;
+
+		Qcm.query().$promise
+		.then( function (data) {
+			$scope.shows = data;
+		})
+		.finally( function () {
+			$scope.loading = false;
+		});
+	}
+
+
+	    $scope.startQcm = function () {
+             $scope.qcm.push({
+                text: 'title',
+                question: [],
+                cat:{},
+                id:0
+
+
+
+
+
+
+            });
+
+
+        }
+         $scope.startQcm ();
+         $scope.update ();
+
+
+    });
+
+</script>
+{% endverbatim %}
+{% endblock %}
+{% block body %}
+    {% verbatim %}
+<div ng-app="demo">
+
+    <div ng-controller="QueryController">
+    {% endverbatim %}
+    <button ng-click="select({{id}})">{{id}}</button>
+    {% verbatim %}
+        <md-content layout-padding>
+            <div ng-repeat="item2 in qcm">
+
+
+           <p>   {{item2.cat.name}} hfkldbklg </p>
+
+
+
+             </div>
+
+
+        </md-content>
+
+
+    </div>
+</div>
+
+
+{% endverbatim %}
+{% endblock %}

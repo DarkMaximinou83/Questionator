@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+QCM
+{% endblock %}
+
+
+{% block body %}
+
+    <div ng-app="myApp" ng-controller="MyCtrl" class="container "  ng-swipe-left="swipeLeft({{ nbQuestion }})" ng-swipe-right="swipeRight()" >
+        {% verbatim %}
+
+
+{% endverbatim %}
+
+
+        <div class="card-panel " style="margin-top: 100px">
+
+
+
+            <form >
+                {% for item in qcm %}
+
+                <p>Examen : {{ item.text }}</p>
+
+                {% for item2 in question %}
+
+
+                        <div ng-if="slide == {{ loop.index }}" class="blue-text text-darken-2 " >
+
+                    <p>Question {{ loop.index }} :</p>
+                        <p>{{ item2.text }}</p>
+
+                        {% for item3 in response %}
+                            {% if item3.getQuestions().getId()==item2.getId() %}
+
+
+
+
+                                <input name="response[]" type="checkbox" id="{{ item3.id }}" value="{{ item3.id }}" onclick="save({{ item3.id }})" />
+                                <label for="{{ item3.id }}">{{ item3.text }}</label>
+
+
+
+
+
+                            {% endif %}
+                        {% endfor %}
+
+                        </div>
+
+
+                    {% endfor %}
+                    {% endfor %}
+
+
+
+            </form>
+
+        </div>
+        <h5 class="center-align"><i class="material-icons">warning</i>Toute réponse est définitive</h5>
+
+
+
+
+    </div>
+
+
+{% endblock %}

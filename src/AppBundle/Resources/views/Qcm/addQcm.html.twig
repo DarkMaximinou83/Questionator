@@ -1,7 +1,9 @@
 
 {% extends 'base.html.twig' %}
 
-
+{% block title %}
+Cr�er un QCM
+{% endblock %}
 {% block javascripts %}
 {% verbatim %}
 <script type="text/javascript">
@@ -27,7 +29,7 @@
                 text: 'vide',
                 responses: [],
                 difficulty: 0,
-                 rjuste: 0
+                 rjuste: 88
 
 
             });
@@ -42,7 +44,9 @@
              $scope.qcm.push({
                 text: 'title',
                 question: [],
-                cat:{}
+                cat:{},
+                verif:0,
+                total:0
 
 
 
@@ -74,11 +78,19 @@
         $scope.addResponse = function (query) {
             query.responses.push({
                 text: '',
+                juste:0
 
             });
         }
 
+        $scope.setJusteResponse = function (response) {
+            response.juste=1;
 
+        }
+         $scope.setFausseResponse = function (response) {
+             response.juste=0;
+
+        }
 
         $scope.save = function (qcm) {
 
@@ -99,9 +111,16 @@
 {% endblock %}
 {% block body %}
 {% verbatim %}
+<div class="container">
 <div ng-app="demo">
+
     <div ng-controller="QueryController">
+		
+		
+		<h1 class="center-align">Ajouter QCM</h1>
+		
         <md-content layout-padding>
+
 
             <div ng-repeat="item2 in qcm">
             <input type="text" ng-model="item2.text" /><br />
@@ -111,8 +130,10 @@
                         <md-option ng-value="categorie" ng-repeat="categorie in categories">{{ categorie.name }}</md-option>
                     </md-select>
 
-                </md-input-container>
-            <button ng-click="addQuery(item2)">Ajouter une question</button>
+             </md-input-container>
+
+
+            <button ng-click="addQuery(item2)" class="waves-effect waves-light btn" style="margin-bottom: 10px">Ajouter une question</button>
 
             <div ng-repeat="item in item2.question">
                 <h1>Question {{ $index + 1 }}</h1>
@@ -126,22 +147,37 @@
 
                 <br />
 
+
                 <md-input-container ng-repeat="response in item.responses">
+
+
+                 <md-radio-group ng-model="data.group1">
+
+                             <md-radio-button value="Right" ng-click="setJusteResponse(response)">Right</md-radio-button>
+                             <md-radio-button value="False" ng-click="setFausseResponse(response)">False</md-radio-button>
+
+
+                        </md-radio-group>
                     <input type="text" ng-model="response.text" /><br />
 
-                </md-input-container>
 
-                <button ng-click="addResponse(item)">Ajouter une réponse</button>
+
+                </md-input-container>
+                <div>
+                <button ng-click="addResponse(item)" class="waves-effect waves-light btn" style="margin-bottom: 10px">Ajouter une réponse</button>
+                </div>
 
 
 
             </div>
-            <button ng-click="save(item2)">Sauvegarder le qcm</button>
+            <button ng-click="save(item2)" class="waves-effect waves-light btn" style="margin-bottom: 10px">Sauvegarder le qcm</button>
             </div>
         </md-content>
 
 
     </div>
+</div>
+
 </div>
 
 

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+
+
+<div>
+        <h1 class="center">Choisir un QCM</h1>
+        <div class="card-panel z-depth-1">
+            <div style="overflow-x: auto;">
+                <table class="bordered highlight responsive-table" >
+                    <thead>
+                    <tr>
+                        {% for item in cat %}
+                        
+                        <th class="center-align"><h1 style="color:blue">{{ item.name }}</h1></th>
+      
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item2 in qcm %}
+					<tr>
+                        {% if item2.getCat().getId()==item.getId() %}
+                            <td class="center-align"><a class="waves-effect waves-light flat btn" href="{{ path('playBegin',{'id':item2.getId()}) }}">{{ item2.text }}</a></td>
+                           	</tr>
+                        {% endif %}
+                        {%  endfor %}
+					
+                    {%  endfor %}
+				
+                    </tbody>
+                </table>
+                </body>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

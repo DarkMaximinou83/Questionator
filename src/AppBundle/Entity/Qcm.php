@@ -48,6 +48,21 @@ class Qcm
 
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="verif", type="integer")
+     */
+    private $verif;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="total", type="integer")
+     */
+    private $total;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -146,4 +161,43 @@ class Qcm
     {
         return $this->question;
     }
+
+    /**
+     * @return int
+     */
+    public function getVerif()
+    {
+        return $this->verif;
+    }
+
+    /**
+     * @param int $verif
+     */
+    public function setVerif($verif)
+    {
+        $this->verif = $verif;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param int $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    public function getNbQuestion(){
+        return count($this->question);
+
+    }
+
+
 }

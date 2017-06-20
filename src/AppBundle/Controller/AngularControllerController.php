@@ -62,6 +62,7 @@ class AngularControllerController extends  FOSRestController
 
             }
         }
+        $cat->addQcm($qcm);
 
         $qcm->setCat($cat); // associe une catégorie existante
         $em->persist($qcm);
@@ -89,6 +90,9 @@ class AngularControllerController extends  FOSRestController
     {
         return $this->getDoctrine()->getRepository('AppBundle:Categories')->findAll();
     }
+
+
+
 
 
 }

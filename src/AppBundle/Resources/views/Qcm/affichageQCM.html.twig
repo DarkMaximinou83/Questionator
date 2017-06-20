@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Liste QCM
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <h1 class="center">Liste des QCM</h1>
+        <div class="center-align">
+                    <a href="{{ path('add_cat') }}" class="waves-effect waves-light flat btn">Nouvelle catégorie</a>
+
+                
+                    <a href="{{ path('addQCM') }}"class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+		</div>
+        <div class="card-panel z-depth-1">
+            <div style="overflow-x: auto;">
+                <table class="bordered highlight responsive-table" >
+                    <thead>
+                    <tr>
+                        {% for item in cat %}
+                        
+                        <th class="center-align"><h1 style="color:blue">{{ item.name }}</h1></th>
+      
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item2 in qcm %}
+					<tr>
+                        {% if item2.getCat().getId()==item.getId() %}
+                            <td class="center-align"><a class="waves-effect waves-light flat btn" href="{{ path('playBegin',{'id':item2.getId()}) }}">{{ item2.text }}</a></btn>
+                            <a href="{{ path('modifQCM',{'id':item2.getId()}) }}"
+                                   class="waves-effect waves-light btn green"><i class="material-icons">mode_edit</i></a>
+                            <a href="{{ path('supprQCM',{'id':item2.getId()}) }}"
+                                   class="waves-effect waves-light btn red"><i class="material-icons">delete</i></a></td>
+                                   
+                                   
+                         </tr>   
+                        {% endif %}
+                        {%  endfor %}
+					
+                    {%  endfor %}
+			       </tbody>
+                </table>
+                </body>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Categories;
 use AppBundle\Form\AjoutCatType;
@@ -11,7 +12,8 @@ use AppBundle\Form\AjoutCatType;
 class CategorieController extends Controller
 {
     /**
-     * @Route("/Add")
+     * @Route("/Add",name ="Add")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function AddAction()
     {
@@ -22,6 +24,7 @@ class CategorieController extends Controller
 
     /**
      * @Route("/AddCat", name ="add_cat")
+     * @Security("has_role('ROLE_ADMIN')")
 
      */
     public function AjouterAction(Request $request)

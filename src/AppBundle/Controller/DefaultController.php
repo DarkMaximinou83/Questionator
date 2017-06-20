@@ -14,7 +14,17 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
+        return $this->redirectToRoute('app.login');
+    }
+
+
+    /**
+     * @Route("/choixQcm", name="choixQcm")
+     */
+    public function choixQcmAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/main.html.twig', [
             'cat' => $this->getDoctrine()->getRepository('AppBundle:Categories')->findAll(),
             'qcm' => $this->getDoctrine()->getRepository('AppBundle:Qcm')->findAll(),
         ]);

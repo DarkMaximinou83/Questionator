@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Liste QCM
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        <h1 class="center">Liste des QCM</h1>
+        <div class="center-align">
+            <a href="{{ path('add_cat') }}" class="waves-effect waves-light flat btn">Nouvelle catégorie</a>
+
+
+            <a href="{{ path('addQCM') }}"class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-panel z-depth-1">
+            <div style="overflow-x: auto;">
+                <table class="bordered highlight responsive-table" >
+                    <thead>
+                    <tr>
+
+
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item2 in qcm %}
+                        <tr>
+
+                            <td class="center-align">
+                                <p>Titre du QCM :   {{ item2.text }}
+                            {% if item2.getVerif()==1 %}
+                                Note :
+                                    {{ item2.getTotal() }}/{{ item2.getNbQuestion() }}</p>
+                            {% endif %}
+                            {% if item2.getVerif()==0 %}
+                                    Qcm non fait</p>
+                            {% endif %}
+
+
+                            </td>
+                            </tr>
+                    {%  endfor %}
+
+
+                    </tbody>
+                </table>
+                </body>
+            </div>
+        </div>
+    </div>
+{% endblock %}

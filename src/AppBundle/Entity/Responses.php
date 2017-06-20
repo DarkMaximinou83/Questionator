@@ -22,6 +22,15 @@ class Responses
      */
     private $id;
 
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="juste", type="integer")
+     */
+    private $juste;
+
     /**
      * @return Question
      */
@@ -87,4 +96,23 @@ class Responses
     {
         return $this->text;
     }
+
+    /**
+     * @return int
+     */
+    public function getJuste()
+    {
+        return $this->juste;
+    }
+
+    /**
+     * @param int $juste
+     */
+    public function setJuste($juste)
+    {
+        $this->juste = $juste;
+    }
+
+
+
 }

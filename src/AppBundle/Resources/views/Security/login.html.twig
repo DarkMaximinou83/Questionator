@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Accueil
+{% endblock %}
+
+{% block body %}
+
+
+    <ul id="slide-out" class="side-nav">
+        <li><div class="userView">
+                <div class="background">
+
+                </div>
+            </div></li>
+        <div class="section"></div>
+        <main>
+            <center>
+                <div class="section"></div>
+
+                <h5 class="indigo-text">Veuillez-vous connecter</h5>
+                <div class="section"></div>
+
+                <div class="container">
+                    <div class="z-depth-1 grey lighten-4 row"
+                         style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                        <form action="{{ path('app.login') }}" class="col s12" method="post">
+                            <div class='row'>
+                                <div class='col s12'></div>
+                            </div>
+
+                            <div class='row'>
+                                {% if error %}
+                                    <div>
+                                        <h5>
+                                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                                        </h5>
+                                    </div>
+                                {% endif %}
+                                <div class='input-field col s12'>
+                                    <input type="text" name="_username" id="username"
+                                           value="{{ last_username }}" /> <label for="username">Username:</label>
+                                </div>
+                            </div>
+
+                            <div class='row'>
+                                <div class='input-field col s12'>
+                                    <input type="password" name="_password" id="password" /> <label
+                                            for='password'>Password</label>
+                                </div>
+                            </div>
+
+                            <br />
+                            <center>
+                                <div class='row'>
+                                    <button type="submit" name="action"
+                                            class='col s12 btn btn-large waves-effect indigo'>Login</button>
+                                </div>
+                            </center>
+                        </form>
+                        {% if app.user %}
+                            <div class='row'>
+                                <a class="waves-effect waves-light btn" href="{{ path('app.logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </center>
+
+            <div class="section"></div>
+            <div class="section"></div>
+        </main>
+
+    </ul>
+
+    <a href="#" data-activates="slide-out" class="btn button-collapse"><i class="material-icons">format_list_bulleted</i></a>
+    <div class="container">
+
+
+        <div class="row center-block">
+            {% block stylesheets %}
+                <style>
+                    .center-block{
+                        text-align: center
+                    }
+                </style>
+
+
+
+            {% endblock %}
+            <div>
+                <a {% if app.user %} href="{{ path('affichageQCM') }}" {% endif %} href="{{ path('choixQcm')}}" class="waves-effect waves-light btn-large" style="margin-top: 20%" >Voir liste QCM</a>
+            </div>
+            {% if app.user %}
+                <div style="margin-top: 3%">
+                    <a href="{{ path('resultatQcm') }}"class="waves-effect waves-light btn-large">Résultats</a>
+                </div>
+
+                <div style="margin-top: 3%">
+                    <a href="{{ path('add_cat') }}" class="waves-effect waves-light btn-large">Nouvelle catégorie</a>
+                </div>
+                
+                <div style="margin-top: 3%">
+                    <a href="{{ path('addQCM') }}"class="btn-floating btn-large waves-effect waves-light "><i class="material-icons">add</i></a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}
